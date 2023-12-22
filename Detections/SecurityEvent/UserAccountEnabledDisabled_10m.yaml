@@ -94,7 +94,7 @@ query: |
   | where DisableTime - EnableTime < spanoftime
   | extend TimeDelta = DisableTime - EnableTime
   | where tolong(TimeDelta) >= threshold
-  | project TimeDelta, EnableTime, EnableEventID, EnableActivity, Computer, TargetAccount, TargetSid, UserPrincipalName, 
+  | project TimeDelta, EnableTime, EnableEventID, EnableActivity, Computer, TargetAccount, TargetUserName, TargetDomainName, TargetSid, UserPrincipalName, 
   AccountUsedToEnable, SIDofAccountUsedToEnable, DisableTime, DisableEventID, DisableActivity, AccountUsedToDisable, SIDofAccountUsedToDisable, 
   EnabledBySubjectUserName, EnabledBySubjectDomainName, DisabledBySubjectUserName, DisabledBySubjectDomainName
   | extend HostName = tostring(split(Computer, ".")[0]), DomainIndex = toint(indexof(Computer, '.'))
