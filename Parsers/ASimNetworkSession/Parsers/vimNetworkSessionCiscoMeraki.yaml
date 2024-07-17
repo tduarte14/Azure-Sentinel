@@ -233,6 +233,8 @@ ParserQuery: |
           | extend NetworkIcmpType = iff(isnotempty(NetworkIcmpCode), coalesce(NetworkIcmpType_lookup, NetworkIcmpType), "")
           | extend pattern = coalesce(trim("'", pattern1), trim("'", pattern2))
           | extend pattern = trim('"', pattern)
+          | extend direction = case(pattern has_any ('0','1'), 'ingress', pattern has_any ('allow','deny'), 'egress', 'unknown')
+          | lookup NetworkDirectionLookup on direction
           | lookup DvcActionLookup on pattern
           | extend direction = case(pattern has_any ('0','1'), 'ingress', pattern has_any ('allow','deny'), 'egress', 'unknown')
           | lookup NetworkDirectionLookup on direction
